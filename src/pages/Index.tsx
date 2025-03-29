@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '@/components/Hero';
@@ -89,19 +88,21 @@ const Index = () => {
         </section>
         
         <section className="mb-16">
-          <div className="bg-secondary/30 rounded-2xl p-8 md:p-12 relative overflow-hidden">
-            <div className="max-w-2xl">
+          <div className="bg-secondary/30 rounded-2xl p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center">
+            <div className="max-w-2xl z-10 md:w-2/3">
               <h2 className="text-2xl md:text-3xl font-serif font-medium mb-4">Ready to become a host?</h2>
               <p className="text-lg mb-6">Share your space and earn extra income while connecting with travelers from around the world.</p>
-              <Button size="lg">Learn more about hosting</Button>
+              <Button size="lg" className="btn-shine relative z-10">Learn more about hosting</Button>
             </div>
             
-            <div className="absolute right-0 bottom-0 w-1/3 opacity-30 md:opacity-100 md:w-auto">
-              <img 
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80"
-                alt="Hosting illustration"
-                className="w-full h-full object-cover"
-              />
+            <div className="md:absolute md:right-0 md:top-0 md:h-full w-full md:w-1/3 mt-8 md:mt-0 overflow-hidden">
+              <div className="w-full h-full transform transition-transform duration-700 hover:scale-105">
+                <img 
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80"
+                  alt="Hosting illustration"
+                  className="w-full h-full object-cover rounded-lg shadow-lg"
+                />
+              </div>
             </div>
           </div>
         </section>
