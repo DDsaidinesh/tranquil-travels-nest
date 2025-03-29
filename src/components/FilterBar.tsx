@@ -52,7 +52,7 @@ const FilterBar = () => {
       <Button 
         variant="ghost" 
         size="icon" 
-        className="absolute left-0 z-10 rounded-full shadow-md bg-background" 
+        className="absolute left-0 z-10 rounded-full shadow-md bg-background hover:bg-muted transition-all duration-300" 
         onClick={scrollLeft}
       >
         <ChevronLeft size={16} />
@@ -60,21 +60,21 @@ const FilterBar = () => {
       
       <div 
         id="filter-container"
-        className="flex items-center gap-2 md:gap-4 py-2 overflow-x-auto scrollbar-hide px-8 mx-auto w-full"
+        className="flex items-center gap-2 md:gap-4 py-3 overflow-x-auto scrollbar-hide px-8 mx-auto w-full"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {filterCategories.map((filter) => (
           <Button
             key={filter.id}
             variant={activeFilter === filter.id ? "default" : "outline"}
-            className={`rounded-full whitespace-nowrap px-3 py-1 transition-colors ${
+            className={`rounded-full whitespace-nowrap px-3 py-1 filter-item ${
               activeFilter === filter.id 
-                ? 'bg-foreground text-background' 
-                : 'border-muted-foreground/20 hover:border-muted-foreground/60'
+                ? 'bg-foreground text-background shadow-md' 
+                : 'border-muted-foreground/20 hover:border-muted-foreground/60 hover:shadow-md'
             }`}
             onClick={() => handleFilterClick(filter.id)}
           >
-            <span className="mr-2">{filter.icon}</span>
+            <span className="mr-2 filter-item">{filter.icon}</span>
             {filter.label}
           </Button>
         ))}
@@ -83,7 +83,7 @@ const FilterBar = () => {
       <Button 
         variant="ghost" 
         size="icon" 
-        className="absolute right-0 z-10 rounded-full shadow-md bg-background" 
+        className="absolute right-0 z-10 rounded-full shadow-md bg-background hover:bg-muted transition-all duration-300" 
         onClick={scrollRight}
       >
         <ChevronRight size={16} />
