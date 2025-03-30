@@ -62,7 +62,7 @@ const PropertyCard = ({
 
   return (
     <Link to={`/listings/${id}`} className="group">
-      <div className={`relative rounded-xl overflow-hidden card-shadow hover-scale ${featured ? 'aspect-square md:aspect-[4/3]' : 'aspect-square'}`}>
+      <div className={`relative rounded-xl overflow-hidden ghibli-card hover-scale ${featured ? 'aspect-square md:aspect-[4/3]' : 'aspect-square'}`}>
         {/* Image Gallery */}
         <div className="absolute inset-0 bg-muted">
           <img 
@@ -72,7 +72,7 @@ const PropertyCard = ({
           />
           
           {/* Overlay gradient for better text legibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ghibli-overlay"></div>
           
           {/* Navigation dots */}
           {images.length > 1 && (
@@ -148,7 +148,10 @@ const PropertyCard = ({
         <p className="text-muted-foreground">{location}</p>
         {distance && <p className="text-muted-foreground">{distance}</p>}
         {dates && <p className="text-muted-foreground">{dates}</p>}
-        <p className="font-semibold"><span className="gradient-text">${price}</span> <span className="font-normal text-muted-foreground">night</span></p>
+        <p className="font-semibold">
+          <span className="bg-gradient-to-r from-blue-500 to-teal-400 bg-clip-text text-transparent">${price}</span> 
+          <span className="font-normal text-muted-foreground"> night</span>
+        </p>
       </div>
     </Link>
   );
