@@ -1,12 +1,22 @@
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Search, Globe, User, Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
   const [searchExpanded, setSearchExpanded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+  
+  const handleSearchClick = () => {
+    setSearchExpanded(true);
+    // If there's a search query, navigate to the listings page with the search parameter
+    if (searchQuery.trim()) {
+      navigate(`/listings?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   return (
     <nav className="sticky top-0 left-0 w-full bg-background/90 backdrop-blur-md z-50 px-4 md:px-6 py-4 border-b border-border transition-all duration-300">
@@ -26,7 +36,7 @@ const Navbar = () => {
         <div className="hidden md:flex items-center relative max-w-md w-full">
           <div 
             className="w-full bg-background border border-border rounded-full px-4 py-2 flex items-center gap-4 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
-            onClick={() => setSearchExpanded(true)}
+            onClick={handleSearchClick}
           >
             <div className="flex-1">
               <div className="text-sm font-medium">Anywhere</div>
@@ -37,11 +47,29 @@ const Navbar = () => {
             </div>
             <div className="h-6 w-px bg-border"></div>
             <div className="flex-1">
-              <div className="text-sm text-muted-foreground">Add guests</div>
+              <input 
+                type="text" 
+                placeholder="Add guests" 
+                className="text-sm w-full bg-transparent outline-none border-none"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onClick={(e) => e.stopPropagation()}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSearchClick();
+                  }
+                }}
+              />
             </div>
-            <div className="bg-teal-600 p-2 rounded-full text-white transform transition-transform duration-300 hover:scale-105">
+            <button 
+              className="bg-teal-600 p-2 rounded-full text-white transform transition-transform duration-300 hover:scale-105"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSearchClick();
+              }}
+            >
               <Search size={16} />
-            </div>
+            </button>
           </div>
         </div>
 
