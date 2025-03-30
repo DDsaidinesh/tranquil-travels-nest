@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, Globe, User, Menu, Calendar, Users, MapPin } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -16,7 +16,25 @@ const Navbar = () => {
   const [guests, setGuests] = useState('');
   const [activeInput, setActiveInput] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show the search bar when scrolled down more than 100px
+      if (window.scrollY > 100) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   
   const handleSearchClick = () => {
     const params = new URLSearchParams();
@@ -26,6 +44,12 @@ const Navbar = () => {
     if (searchQuery.trim()) params.append('search', searchQuery.trim());
     
     navigate(`/listings?${params.toString()}`);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearchClick();
+    }
   };
 
   const countries = [
@@ -39,7 +63,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 left-0 w-full bg-background/90 backdrop-blur-md z-50 px-4 md:px-6 py-4 border-b border-border transition-all duration-300">
+    <nav className={`sticky top-0 left-0 w-full bg-background/90 backdrop-blur-md z-50 px-4 md:px-6 py-4 border-b border-border transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2 group">
@@ -53,9 +77,10 @@ const Navbar = () => {
         </Link>
 
         {/* Search bar - desktop */}
-        <div className="hidden md:flex items-center relative max-w-md w-full">
+        <div className={`hidden md:flex items-center relative max-w-md w-full transition-all duration-300 ${isScrolled ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
           <div 
             className="w-full bg-background border border-border rounded-full px-4 py-2 flex items-center gap-4 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
+            onKeyDown={handleKeyPress}
           >
             {/* Location */}
             <Popover open={activeInput === 'location'} onOpenChange={(open) => setActiveInput(open ? 'location' : null)}>
